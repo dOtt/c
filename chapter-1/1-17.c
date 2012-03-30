@@ -11,16 +11,20 @@ int my_readline();
 /* print the longest input line */
 main()
 {
-  char line[LINE_LIMIT];
-  int i, j;
-  char c;
+  while((my_readline()) > 0);
+}
+
+/* Read a line, then return the number of readed chars. */
+int my_readline(){
+  char line[LINE_LIMIT], c;
+  int i;
 
   for (i=0; i<LINE_LIMIT && (c=getchar()) != EOF && c != '\n'; i++) {
     line[i] = c;
   }
   if (i == LINE_LIMIT) {
-    for (j=0; j <LINE_LIMIT; j++) {
-      putchar(line[j]);
+    for (i=0; i <LINE_LIMIT; i++) {
+      putchar(line[i]);
     }
     while ((c=getchar()) != EOF && c != '\n') {
       putchar(c);
@@ -28,4 +32,6 @@ main()
     if (c == '\n')
       putchar(c);
   }
+
+  return i;
 }
