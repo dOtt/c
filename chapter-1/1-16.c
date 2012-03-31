@@ -41,7 +41,7 @@ int my_getline(char s[], int lim)
     s[i] = c;
     ++i;
   }
-  s[lim-1] = '\0';
+  s[i] = '\0';
   return i;
 }
 
