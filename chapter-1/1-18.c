@@ -13,18 +13,26 @@ main() {
   while (c != EOF) {
     for (i=0; (c=getchar()) != '\n' && c != EOF; i++) {
       if (c == ' ' || c == '\t') { /* special characters */
-        if (trail != 1) {          /* enter trail-mode if not in already */
+        if (!trail) {              /* enter trail-mode if not in already */
           trail = 1;
         }
         if (j < CHAR_BUF_SIZE) { /* prevent overflow */
           buff[j++] = c;
-        }
-      } else {                  /* normal characters */
-        if (trail == 1) {       /* exit trail-mode, also print all chars */
+        } else if (j == CHAR_BUF_SIZE) {
+          /* can't handle it anymore, have to dump the buffer */
           for (k=0; k < j; k++) {
             putchar(buff[k]);
           }
-          trail = j = 0;
+          /* reuse buffer from beginning */
+          j = 0;
+          buff[j++] = c;
+        }
+      } else {                  /* normal characters */
+        if (trail) {            /* exit trail-mode, also print all chars */
+          for (k=0; k < j; k++) {
+            putchar(buff[k]);
+          }
+          j = trail = 0;
         }
         putchar(c);
       }
@@ -34,7 +42,7 @@ main() {
       putchar(c);
     }
     /* reset trail buffer */
-    trail = j = 0;
+    j = trail = 0;
   }
   /* input ends */
 }
