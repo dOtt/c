@@ -8,6 +8,10 @@
 #include <limits.h>
 #include <float.h>
 
+#define INFI (1.0 / 0.0)
+#define INFI_N (-1.0 / 0.0)
+#define NAN (0.0 / 1.0)
+
 main (void)
 {
   /* print range statistics from headers */
@@ -107,39 +111,39 @@ main (void)
   /* float */
   {
     float f, tmp, step, min, max;
-    for (tmp = f = 1.0F; (tmp += f) > f && tmp != (1.0/0.0); f = tmp);
+    for (tmp = f = 1.0F; (tmp += f) > f && tmp != INFI; f = tmp);
     for (step = f/2; step != 0; step /= 2)
-      for (; (tmp = f + step) > f && tmp != (1.0/0.0); f = tmp);
+      for (; (tmp = f + step) > f && tmp != INFI; f = tmp);
     max = f;
-    for (tmp = f = -1.0F; (tmp += f) < f && tmp != (-1.0/0.0); f = tmp);
+    for (tmp = f = -1.0F; (tmp += f) < f && tmp != INFI_N; f = tmp);
     for (step = f/2; step != 0; step /= 2)
-      for (; (tmp = f + step) < f && tmp != (-1.0/0.0); f = tmp);
+      for (; (tmp = f + step) < f && tmp != INFI_N; f = tmp);
     min = f;
     printf("  float: (%e, %e)\n", min, max);
   }
   /* double */
   {
     double d, tmp, step, min, max;
-    for (tmp = d = 1.0; (tmp += d) > d && tmp != (1.0/0.0); d = tmp);
+    for (tmp = d = 1.0; (tmp += d) > d && tmp != INFI; d = tmp);
     for (step = d/2; step != 0; step /= 2)
-      for (; (tmp = d + step) > d && tmp != (1.0/0.0); d = tmp);
+      for (; (tmp = d + step) > d && tmp != INFI; d = tmp);
     max = d;
-    for (tmp = d = -1.0; (tmp += d) < d && tmp != (-1.0/0.0); d = tmp);
+    for (tmp = d = -1.0; (tmp += d) < d && tmp != INFI_N; d = tmp);
     for (step = d/2; step != 0; step /= 2)
-      for (; (tmp = d + step) < d && tmp != (-1.0/0.0); d = tmp);
+      for (; (tmp = d + step) < d && tmp != INFI_N; d = tmp);
     min = d;
     printf("  double: (%e, %e)\n", min, max);
   }
   /* long double */
   {
     long double d, tmp, step, min, max;
-    for (tmp = d = 1.0L; (tmp += d) > d && tmp != (1.0/0.0); d = tmp);
+    for (tmp = d = 1.0L; (tmp += d) > d && tmp != INFI; d = tmp);
     for (step = d/2; step != 0; step /= 2)
-      for (; (tmp = d + step) > d && tmp != (1.0/0.0); d = tmp);
+      for (; (tmp = d + step) > d && tmp != INFI; d = tmp);
     max = d;
-    for (tmp = d = -1.0L; (tmp += d) < d && tmp != (-1.0/0.0); d = tmp);
+    for (tmp = d = -1.0L; (tmp += d) < d && tmp != INFI_N; d = tmp);
     for (step = d/2; step != 0; step /= 2)
-      for (; (tmp = d + step) < d && tmp != (-1.0/0.0); d = tmp);
+      for (; (tmp = d + step) < d && tmp != INFI_N; d = tmp);
     min = d;
     printf("  long double: (%Le, %Le)\n", min, max);
   }
